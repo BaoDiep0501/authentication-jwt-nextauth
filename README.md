@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bài Tập: Xác Thực Người Dùng Với NextAuth.js (v5)
 
-## Getting Started
+## 🔗 Ngữ Cảnh & Yêu Cầu Nghiệp Vụ
+Bạn đang phát triển module xác thực lõi cho một ứng dụng web sử dụng Next.js (App Router).
+- Hệ thống sử dụng cơ chế **stateless authentication**, quản lý phiên bằng **JWT** (không lưu session trên database).
+- Phương thức đăng nhập duy nhất được yêu cầu là **GitHub OAuth**.
+- Dữ liệu Payload trong JWT chỉ dùng để truyền thông tin cơ bản. Tuyệt đối không lưu trữ thông tin nhạy cảm.
 
-First, run the development server:
+## ⚙️ Cài Đặt
 
+1. Fork repository này về tài khoản GitHub của bạn, sau đó clone về máy:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <URL-fork-cua-ban>
+cd authentication-jwt-nextauth
+npm install
+npm install next-auth@beta
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Cấu hình biến môi trường:
+Tạo file `.env.local` ở thư mục gốc (copy cấu trúc từ file `.env.example`) và điền các thông tin:
+- `AUTH_SECRET`: Mở terminal chạy lệnh `npx auth secret` để sinh chuỗi bảo mật và dán vào đây.
+- `AUTH_GITHUB_ID` & `AUTH_GITHUB_SECRET`: Lấy từ trang Developer Settings > OAuth Apps trên tài khoản GitHub của bạn.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+*(Tuyệt đối không chia sẻ hoặc commit file `.env.local` lên GitHub)*
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Khởi động ứng dụng:
+```bash
+npm run dev
+```
 
-## Learn More
+## 📝 Nhiệm Vụ Của Bạn
+Hoàn thành cấu hình xác thực tại 2 file bị khuyết trong dự án. Tuyệt đối không thay đổi cấu trúc thư mục hoặc file giao diện (`page.tsx`).
 
-To learn more about Next.js, take a look at the following resources:
+**Nhiệm vụ 1: Hoàn thiện `auth.ts` (tại thư mục gốc)**
+- Xóa các hàm giả (dummy functions) có sẵn.
+- Import `NextAuth` và `GitHub` provider từ `next-auth/providers/github`.
+- Cấu hình strategy cho session là `jwt`.
+- Export đúng các đối tượng `handlers`, `auth`, `signIn`, `signOut`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Nhiệm vụ 2: Thiết lập Route Handler (`app/api/auth/[...nextauth]/route.ts`)**
+- Import `handlers` từ file `auth.ts` ở thư mục gốc.
+- Export các phương thức `GET` và `POST` từ `handlers` để NextAuth tự động xử lý các luồng callback và API ngầm.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🧪 Kiểm Tra Kết Quả
+- Đảm bảo server đang chạy, mở trình duyệt truy cập `http://localhost:3000`. Giao diện ban đầu sẽ báo "Chưa đăng nhập".
+- Bấm vào nút đăng nhập bằng GitHub. Nếu bạn cấu hình đúng logic ở 2 file trên, NextAuth sẽ khởi tạo JWT, lưu vào Cookie an toàn và chuyển hướng bạn về trang chủ hiển thị thành công tên và email của bạn.
