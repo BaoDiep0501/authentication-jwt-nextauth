@@ -45,9 +45,10 @@ Hoàn thành cấu hình xác thực tại 2 file bị khuyết trong dự án. 
 - Đảm bảo server đang chạy, mở trình duyệt truy cập `http://localhost:3000`. Giao diện ban đầu sẽ báo "Chưa đăng nhập".
 - Bấm vào nút đăng nhập bằng GitHub. Nếu bạn cấu hình đúng logic ở 2 file trên, NextAuth sẽ khởi tạo JWT, lưu vào Cookie an toàn và chuyển hướng bạn về trang chủ hiển thị thành công tên và email của bạn.
 ## 📤 Nộp bài
--Sau khi code và test xong, commit và push mã nguồn lên fork của bạn:
+- Sau khi code và test xong, commit và push mã nguồn lên fork của bạn:
 ```bash
 git add .
 git commit -m "Hoan thanh bai tap NextAuth"
 git push origin main
 ```
+- Vào Compare & pull request rồi bấm Create pull request. 
