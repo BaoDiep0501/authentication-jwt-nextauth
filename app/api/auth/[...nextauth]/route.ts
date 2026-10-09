@@ -3,3 +3,6 @@
 // 2. Export các phương thức GET và POST từ handlers
 
 // Code của bạn ở dưới đây:
+import { handlers } from "../../../../auth";
+
+export const { GET, POST } = handlers;
